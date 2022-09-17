@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vvod Managment System</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+</head>
+<body>
+    <div class = "container">
+        <h1>Добавить факт ввода оборудования</h1>
+        <hr>
+        <h2>Введите данные</h2>
+
+        <form action="#" th:action="@{/saveVvod}" th:object = "${vvod}" method="POST">
+        <input type = "text" th:field = "*{nte}" placeholder="НТЭ" class="form-control mb-4 col-4">
+        <input type = "text" th:field = "*{kodProekta}" placeholder="Код проекта" class="form-control mb-4 col-4">
+            <input type = "text" th:field = "*{biznesKod}" placeholder="Бизнес Код" class="form-control mb-4 col-4">
+        <input type = "text" th:field = "*{godPostavki}" placeholder="Год поставки" class="form-control mb-4 col-4">
+        <input type = "text" th:field = "*{naimenovanieOborudovania}" placeholder="Наименование оборудования" class="form-control mb-4 col-4">
+        <input type = "text" th:field = "*{kolichestvo}" placeholder="Количество" class="form-control mb-4 col-4">
+        <input type = "text" th:field = "*{stoimostOborudoivania}" placeholder="Стоимость оборудования" class="form-control mb-4 col-4">
+        <input type = "text" th:field = "*{factVvoda}" placeholder="Факт ввода" class="form-control mb-4 col-4">
+
+        <button type="submit" class="btn btn-info col-2">Сохранить результат</button>
+        </form>
+        </hr>
+        <a th:href = "@{/}">Вернуться на главную страницу</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Система отчетности</title>
+    <link rel="stylesheet" href="src/main/resources/static/css/style.css" th:href="@{/css/styleReg.css}">
+</head>
+<body>
+<br>
+<br>
+<!-- Create HTML registration form -->
+<div class="signupSection">
+    <div class="info">
+        <h2>Трансэнерго</h2>
+        <p>Система отчетности</p>
+    </div>
+    <form th:action="@{/login}" method="post">
+        <h2>Вход в систему</h2>
+
+
+        <div th:if="${param.error}">
+            <div class="alert alert-danger">Не правильный логин или пароль/</div>
+        </div>
+
+        <!-- logout message -->
+        <div th:if="${param.logout}">
+            <div class="alert alert-info">Вы вышли из системы.</div>
+        </div>
+
+
+        <ul class="noBullet">
+
+            <li>
+                <label for="username"></label>:
+                <input type="text" class="inputFields" id="username" name="username" placeholder="Электронная почта (rzd)" autofocus="autofocus"/>
+            </li>
+            <li>
+                <label for="password"></label>:
+                <input type="password" class="inputFields" id="password" name="password" placeholder="Пароль"/>
+            </li>
+
+           <li id="center-btn">
+                <input type="submit" id="join-btn" alt="Войти">
+                <span id="reg">Новый пользователь? <a href="/" th:href="@{/registration}">Регистрация</a></span>
+            </li>
+
+        </ul>
+    </form>
+</div>
+</body>
+</html>

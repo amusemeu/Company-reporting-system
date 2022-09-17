@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Vvod Managment System</title>
+    <link rel="stylesheet" href="src/main/resources/static/css/style.css" th:href="@{/css/style.css}">
+
+</head>
+<body>
+
+    <div class="topnav">
+        <nav class="navbar navbar-light bg-light">
+            <a href="#" class="navbar-logo">
+            <img src="src/main/resources/static/images/logo.png" width="40"
+                 th:src="@{/images/logo.png}"/></a>
+           <a class="navbar-brand" href="#"> Система отчетности Трансэнерго</a>
+        </nav>
+        <div sec:authorize="isAuthenticated()"><a th:href="@{/logout}" >Выйти из системы</a></div>
+        <div><a  href = href="#" th:href="@{/}"><span sec:authentication="principal.username" > User</span></a></div>
+
+    </div>
+
+    <h1>Ввод оборудования в эксплуатацию</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th><a th:href="@{'/page/' + ${currentPage} + '?sortField=nte&sortDir=' + ${reverseSortDir}}">
+                НТЭ</a></th>
+            <th><a th:href="@{'/page/' + ${currentPage} + '?sortField=kodProekta&sortDir=' + ${reverseSortDir}}">
+                Код проекта</a></th>
+            <th>Бизнес Код</th>
+            <th><a th:href="@{'/page/' + ${currentPage} + '?sortField=godPostavki&sortDir=' + ${reverseSortDir}}">
+                Год поставки</a></th>
+            <th><a th:href="@{'/page/' + ${currentPage} + '?sortField=naimenovanieOborudovania&sortDir=' + ${reverseSortDir}}">
+                Наименование оборудования</a></th>
+            <th>Количество</th>
+            <th>Стоимость оборудования</th>
+            <th>Факт ввода</th>
+            <th>Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="vvod : ${listVvod}">
+            <td th:text="${vvod.nte}"></td>
+            <td th:text="${vvod.kodProekta}"></td>
+            <td th:text="${vvod.biznesKod}"></td>
+            <td th:text="${vvod.godPostavki}"></td>
+            <td th:text="${vvod.naimenovanieOborudovania}"></td>
+            <td th:text="${vvod.kolichestvo}"></td>
+            <td th:text="${vvod.stoimostOborudoivania}"></td>
+            <td th:text="${vvod.factVvoda}"></td>
+            <td><div class="box"> <a th:href="@{/showFormForUpdate/{id}(id=${vvod.id})}" class="btn-2">Изменить</a>
+                <a th:href="@{/deleteVvod/{id}(id=${vvod.id})}" class="btn-1">Удалить</a>
+            </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+   <!-- btn btn-primary btn-sm mb-3-->
+<br><br>
+    <a th:href = "@{/showNewVvodForm}" class="pressed-button">Добавить факт ввода</a>
+    <a th:href = "@{/vvod/exportPDF}" class="pressed-button">Выгрузить pdf</a>
+    <a th:href = "@{/vvod/exportExcel}" class="pressed-button">Выгрузить Excel</a>
+
+    <div th:if = "${totalPages > 1}">
+        <div class = "row col-sm-10">
+            <div class = "col-sm-2">
+                Всего строк: [[${totalItems}]]
+            </div>
+            <div class = "col-sm-1">
+					<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+						<a th:if="${currentPage != i}" th:href="@{'/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+						<span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
+					</span>
+            </div>
+            <div class = "col-sm-1">
+                <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Следующая</a>
+                <span th:unless="${currentPage < totalPages}">Следующая</span>
+            </div>
+
+            <div class="col-sm-1">
+                <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Последняя</a>
+                <span th:unless="${currentPage < totalPages}">Последняя</span>
+            </div>
+        </div>
+    </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+</body>
+</html>

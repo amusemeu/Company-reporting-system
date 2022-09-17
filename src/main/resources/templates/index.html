@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Vvod Managment System</title>
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span> <span
+                    class="icon-bar"></span> <span class="icon-bar">Система отчетности Трансэнерго</span> <span
+                    class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" th:href="@{/}"> <span sec:authentication="principal.username"> User</span></a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Выйти из системы</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<br>
+
+<div align="center">
+    <h1>Ввод оборудования в эксплуатацию</h1>
+
+    <table border="1" class = "table table-striped table-responsive-md">
+        <thead>
+        <tr>
+            <th><a th:href="@{'/page/' + ${currentPage} + '?sortField=nte&sortDir=' + ${reverseSortDir}}">
+                НТЭ</a></th>
+            <th><a th:href="@{'/page/' + ${currentPage} + '?sortField=kodProekta&sortDir=' + ${reverseSortDir}}">
+                Код проекта</a></th>
+            <th>Бизнес Код</th>
+            <th><a th:href="@{'/page/' + ${currentPage} + '?sortField=godPostavki&sortDir=' + ${reverseSortDir}}">
+                Год поставки</a></th>
+            <th><a th:href="@{'/page/' + ${currentPage} + '?sortField=naimenovanieOborudovania&sortDir=' + ${reverseSortDir}}">
+                Наименование оборудования</a></th>
+            <th>Количество</th>
+            <th>Стоимость оборудования</th>
+            <th>Факт ввода</th>
+            <th>Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="vvod : ${listVvod}">
+            <td th:text="${vvod.nte}"></td>
+            <td th:text="${vvod.kodProekta}"></td>
+            <td th:text="${vvod.biznesKod}"></td>
+            <td th:text="${vvod.godPostavki}"></td>
+            <td th:text="${vvod.naimenovanieOborudovania}"></td>
+            <td th:text="${vvod.kolichestvo}"></td>
+            <td th:text="${vvod.stoimostOborudoivania}"></td>
+            <td th:text="${vvod.factVvoda}"></td>
+            <td><a th:href="@{/showFormForUpdate/{id}(id=${vvod.id})}" class="btn btn-primary">Изменить</a>
+                <a th:href="@{/deleteVvod/{id}(id=${vvod.id})}" class="btn btn-danger">Удалить</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a th:href = "@{/showNewVvodForm}" class="btn btn-primary btn-sm mb-3">Добавить факт ввода</a>
+
+    <div th:if = "${totalPages > 1}">
+        <div class = "row col-sm-10">
+            <div class = "col-sm-2">
+                Total Rows: [[${totalItems}]]
+            </div>
+            <div class = "col-sm-1">
+					<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+						<a th:if="${currentPage != i}" th:href="@{'/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+						<span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
+					</span>
+            </div>
+            <div class = "col-sm-1">
+                <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Следующая</a>
+                <span th:unless="${currentPage < totalPages}">Следующая</span>
+            </div>
+
+            <div class="col-sm-1">
+                <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Последняя</a>
+                <span th:unless="${currentPage < totalPages}">Последняя</span>
+            </div>
+        </div>
+    </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+</body>
+</html>
